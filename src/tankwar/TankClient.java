@@ -8,6 +8,9 @@ import java.awt.event.WindowEvent;
 
 
 public class TankClient extends Frame {
+	
+	int x=50,y=50;
+	
 	/**
 	 * 进行重画，需要重画时，默认调用；
 	 */
@@ -16,9 +19,9 @@ public class TankClient extends Frame {
 		Color c=g.getColor();//取画笔原来的颜色（默认黑色）；
 		g.setColor(Color.RED);//设置画笔现在的颜色（红色）；
 		//画一个实心圆，参数分别为 x,y,w,h(以x,y为左上角，长宽分别为w,h的内切圆)；
-		g.fillOval(50, 50, 30, 30);
+		g.fillOval(x, y, 30, 30);
 		g.setColor(c);//把画笔设置成原来的颜色；
-		
+		y=y+5;
 	}
 	//继承方法更灵活，可以设置自己的变量和方法；	
 		public void lauchFrame() {
@@ -36,13 +39,26 @@ public class TankClient extends Frame {
 			this.setBackground(Color.GREEN);
 			this.setResizable(false);//设置此窗体是否可由用户调整大小；
 			this.setVisible(true);// 根据参数 b 的值显示或隐藏此 Window；
+			new Thread(new PaintThread()).start();
 		}
 
 		public static void main(String[] args) {
 			TankClient tc = new TankClient();
 			tc.lauchFrame();
 		}
-
+		/*用线程重画均匀*/
+private class PaintThread implements Runnable{
+	public void run(){
+		while(true){
+			repaint();//如果此组件是轻量级组件，则此方法会尽快调用此组件的 paint 方法;
+			try {
+				Thread.sleep(100);//使当前调用的线程sleep一段时间;
+			} catch (InterruptedException e) {
+			      e.printStackTrace();
+			}
+		}
+	}
+}
 	}
 
 
