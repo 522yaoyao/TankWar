@@ -3,6 +3,7 @@ package tankwar;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -10,6 +11,8 @@ import java.awt.event.WindowEvent;
 public class TankClient extends Frame {
 	
 	int x=50,y=50;
+	
+	Image offScreenImage=null;
 	
 	/**
 	 * 进行重画，需要重画时，默认调用；
@@ -22,6 +25,27 @@ public class TankClient extends Frame {
 		g.fillOval(x, y, 30, 30);
 		g.setColor(c);//把画笔设置成原来的颜色；
 		y=y+5;
+	}
+	/**
+	 * 解决屏幕闪烁的问题（用双缓冲解决）；方法调用顺序：repaint();update();paint();
+	 */
+	@Override
+
+	public void update(Graphics g){
+		if(offScreenImage==null){
+			offScreenImage=this.createImage(800,600);//创建一个和窗口同样大小的图片；
+		}
+	//获取该图片的画笔；
+		Graphics gOffScreenImage=offScreenImage.getGraphics();
+		//每绘画一次，图片重刷一次，用绿色背景覆盖上一次的绘画记录，然后再重新绘画坦克；
+		Color c=gOffScreenImage.getColor();
+		gOffScreenImage.setColor(Color.GREEN);
+		gOffScreenImage.fillRect(0, 0, 800, 600);
+		gOffScreenImage.setColor(c);
+		paint(gOffScreenImage);//在此虚拟图片上绘画；
+		
+		g.drawImage(offScreenImage, 0, 0, null);//将此图片绘画到窗上；
+		
 	}
 	//继承方法更灵活，可以设置自己的变量和方法；	
 		public void lauchFrame() {
