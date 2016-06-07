@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -26,7 +28,7 @@ public class TankClient extends Frame {
 		//画一个实心圆，参数分别为 x,y,w,h(以x,y为左上角，长宽分别为w,h的内切圆)；
 		g.fillOval(x, y, 30, 30);
 		g.setColor(c);//把画笔设置成原来的颜色；
-		y=y+5;
+		
 	}
 	/**
 	 * 解决屏幕闪烁的问题（用双缓冲解决）；方法调用顺序：repaint();update();paint();
@@ -65,12 +67,14 @@ public class TankClient extends Frame {
 			this.setBackground(Color.GREEN);
 			this.setResizable(false);//设置此窗体是否可由用户调整大小；
 			this.setVisible(true);// 根据参数 b 的值显示或隐藏此 Window；
+			//this.addKeyListener(new KeyMonitor());//添加指定的按键侦听器，以接收发自此组件的按键事件;
 			new Thread(new PaintThread()).start();
+		//	this.addKeyListener(new KeyMonitor());//添加指定的按键侦听器，以接收发自此组件的按键事件;
 		}
 
 		public static void main(String[] args) {
-			TankClient tc = new TankClient();
-			tc.lauchFrame();
+		TankClient tc = new TankClient();
+		tc.lauchFrame();
 		}
 		/*用线程重画均匀*/
 private class PaintThread implements Runnable{
@@ -84,6 +88,30 @@ private class PaintThread implements Runnable{
 			}
 		}
 	}
+}
+/*写一个内部类实现键盘监听*/
+private class KeyMonitor extends KeyAdapter{
+	@Override
+	public void keyPressed(KeyEvent e){
+//System.out.println("OK");		
+		int key=e.getKeyCode();//从键盘获得虚拟的键（返回与此事件中的键关联的整数 keyCode）；
+		//将获得的键和KeyEvent中的常量进行比较；
+		switch(key){
+		case KeyEvent.VK_RIGHT:
+			x+=5;
+			break;
+		case KeyEvent.VK_LEFT:
+			x-=5;
+			break;
+		case KeyEvent.VK_UP:
+			y-=5;
+			break;
+		case KeyEvent.VK_DOWN:
+			y+=5;
+			break;
+		}
+	}
+	
 }
 	}
 
