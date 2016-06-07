@@ -9,6 +9,8 @@ import java.awt.event.WindowEvent;
 
 
 public class TankClient extends Frame {
+	public static final int GAME_WIDTH=800;
+	public static final int GAME_HIGH=600;
 	
 	int x=50,y=50;
 	
@@ -33,14 +35,14 @@ public class TankClient extends Frame {
 
 	public void update(Graphics g){
 		if(offScreenImage==null){
-			offScreenImage=this.createImage(800,600);//创建一个和窗口同样大小的图片；
+			offScreenImage=this.createImage(GAME_WIDTH, GAME_HIGH);//创建一个和窗口同样大小的图片；
 		}
 	//获取该图片的画笔；
 		Graphics gOffScreenImage=offScreenImage.getGraphics();
 		//每绘画一次，图片重刷一次，用绿色背景覆盖上一次的绘画记录，然后再重新绘画坦克；
 		Color c=gOffScreenImage.getColor();
 		gOffScreenImage.setColor(Color.GREEN);
-		gOffScreenImage.fillRect(0, 0, 800, 600);
+		gOffScreenImage.fillRect(0, 0, GAME_WIDTH, GAME_HIGH);
 		gOffScreenImage.setColor(c);
 		paint(gOffScreenImage);//在此虚拟图片上绘画；
 		
@@ -50,7 +52,7 @@ public class TankClient extends Frame {
 	//继承方法更灵活，可以设置自己的变量和方法；	
 		public void lauchFrame() {
 			this.setLocation(400, 300);//定义窗口出现的位置，以屏幕的左上角为准；
-			this.setSize(800, 600);//设置宽度和高度；
+			this.setSize(GAME_WIDTH, GAME_HIGH);//设置宽度和高度；
 			this.setTitle("TankWar");
 			//建立一个匿名类来设置窗口关闭的监听；
 			this.addWindowListener(new WindowAdapter(){
