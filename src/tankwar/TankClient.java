@@ -14,7 +14,7 @@ public class TankClient extends Frame {
 	public static final int GAME_WIDTH=800;
 	public static final int GAME_HIGH=600;
 	
-	int x=50,y=50;
+	Tank myTank=new Tank(50,50);
 	
 	Image offScreenImage=null;
 	
@@ -23,11 +23,12 @@ public class TankClient extends Frame {
 	 */
 	@Override
 	public void paint(Graphics g){
-		Color c=g.getColor();//取画笔原来的颜色（默认黑色）；
+	/*	Color c=g.getColor();//取画笔原来的颜色（默认黑色）；
 		g.setColor(Color.RED);//设置画笔现在的颜色（红色）；
 		//画一个实心圆，参数分别为 x,y,w,h(以x,y为左上角，长宽分别为w,h的内切圆)；
 		g.fillOval(x, y, 30, 30);
-		g.setColor(c);//把画笔设置成原来的颜色；
+		g.setColor(c);//把画笔设置成原来的颜色；*/
+		myTank.draw(g);
 		
 	}
 	/**
@@ -67,7 +68,7 @@ public class TankClient extends Frame {
 			this.setBackground(Color.GREEN);
 			this.setResizable(false);//设置此窗体是否可由用户调整大小；
 			this.setVisible(true);// 根据参数 b 的值显示或隐藏此 Window；
-			//this.addKeyListener(new KeyMonitor());//添加指定的按键侦听器，以接收发自此组件的按键事件;
+			this.addKeyListener(new KeyMonitor());//添加指定的按键侦听器，以接收发自此组件的按键事件;
 			new Thread(new PaintThread()).start();
 		//	this.addKeyListener(new KeyMonitor());//添加指定的按键侦听器，以接收发自此组件的按键事件;
 		}
@@ -94,22 +95,7 @@ private class KeyMonitor extends KeyAdapter{
 	@Override
 	public void keyPressed(KeyEvent e){
 //System.out.println("OK");		
-		int key=e.getKeyCode();//从键盘获得虚拟的键（返回与此事件中的键关联的整数 keyCode）；
-		//将获得的键和KeyEvent中的常量进行比较；
-		switch(key){
-		case KeyEvent.VK_RIGHT:
-			x+=5;
-			break;
-		case KeyEvent.VK_LEFT:
-			x-=5;
-			break;
-		case KeyEvent.VK_UP:
-			y-=5;
-			break;
-		case KeyEvent.VK_DOWN:
-			y+=5;
-			break;
-		}
+	myTank.keyPressed(e);
 	}
 	
 }
