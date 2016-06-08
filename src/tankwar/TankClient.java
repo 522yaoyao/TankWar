@@ -97,7 +97,10 @@ private class KeyMonitor extends KeyAdapter{
 //System.out.println("OK");		
 	myTank.keyPressed(e);
 	}
-	
+	@Override
+	public void keyReleased(KeyEvent e){
+		myTank.keyReleased(e);
+	}
 }
 	}
 
