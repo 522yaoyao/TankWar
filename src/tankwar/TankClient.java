@@ -14,9 +14,9 @@ public class TankClient extends Frame {
 	public static final int GAME_WIDTH=800;
 	public static final int GAME_HIGH=600;
 	
-	Tank myTank=new Tank(50,50);
-	Missile missile=new Missile(50,50,Tank.Direction.R);
-	
+	Tank myTank=new Tank(50,50,this);
+	//Missile missile=new Missile(50,50,Tank.Direction.R);
+	  Missile  missile;
 	Image offScreenImage=null;
 	
 	/**
@@ -24,8 +24,10 @@ public class TankClient extends Frame {
 	 */
 	@Override
 	public void paint(Graphics g){
-	     myTank.draw(g);
+	if(missile!=null)
 		 missile.draw(g);
+	     myTank.draw(g);
+		
 	}
 	/**
 	 * 解决屏幕闪烁的问题（用双缓冲解决）；方法调用顺序：repaint();update();paint();

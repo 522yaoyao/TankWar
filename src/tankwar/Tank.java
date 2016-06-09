@@ -5,29 +5,38 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 public class Tank {
-	private int x,y;
 	public static final int XSPEED=5;
 	public static final int YSPEED=5;
 	
+	public static final int WIDTH=30;
+	public static final int HEIGHT=30;
+	
+	
+	private int x,y;
 	private boolean bL=false, bU=false,bR=false,bD=false;
-	//定义枚举类型；
-	enum Direction{L,U,LU,R,RU,D,RD,LD,STOP};
+	enum Direction{L,U,LU,R,RU,D,RD,LD,STOP};////定义枚举类型；
 	Direction dir=Direction.STOP;//坦克默认停止；
+	TankClient tc;
+	
 	public Tank(int x,int y){
 		this.x=x;
 		this.y=y;
+	}
+	public Tank(int x,int y,TankClient tc){
+		this(x, y);
+		this.tc=tc;
 	}
    public void draw(Graphics g){
 		Color c=g.getColor();//取画笔原来的颜色（默认黑色）；
 		g.setColor(Color.RED);//设置画笔现在的颜色（红色）；
 		//画一个实心圆，参数分别为 x,y,w,h(以x,y为左上角，长宽分别为w,h的内切圆)；
-		g.fillOval(x, y, 30, 30);
+		g.fillOval(x, y, WIDTH, HEIGHT);
 		g.setColor(c);//把画笔设置成原来的颜色；
 		move();
    }
    public void move(){
 	   switch(dir){
-	   case L:
+	 case L:
 		   x-=XSPEED;
 		   break;
       case LU:
@@ -86,6 +95,9 @@ case STOP:
 	   int key=e.getKeyCode();//从键盘获得虚拟的键（返回与此事件中的键关联的整数 keyCode）；
 		//将获得的键和KeyEvent中的常量进行比较；
 		switch(key){
+		case KeyEvent.VK_CONTROL:
+			tc.missile=fire();
+			break;
 		case KeyEvent.VK_RIGHT:
 			bR=true;
 			break;
@@ -125,4 +137,10 @@ case STOP:
 	   else  if(!bL&&!bU&&!bR&&!bD)
 		   dir=Direction.STOP;
    }
+   public Missile fire(){
+	   int x=this.x+Tank.WIDTH/2-Missile.WIDTH/2;
+	   int y=this.y+Tank.HEIGHT/2-Missile.HEIGHT/2;
+	   Missile m=new Missile(x,y,dir);
+	   return m;
+	   }
 }
