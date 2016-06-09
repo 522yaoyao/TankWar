@@ -15,6 +15,7 @@ public class TankClient extends Frame {
 	public static final int GAME_HIGH=600;
 	
 	Tank myTank=new Tank(50,50);
+	Missile missile=new Missile(50,50,Tank.Direction.R);
 	
 	Image offScreenImage=null;
 	
@@ -23,13 +24,8 @@ public class TankClient extends Frame {
 	 */
 	@Override
 	public void paint(Graphics g){
-	/*	Color c=g.getColor();//取画笔原来的颜色（默认黑色）；
-		g.setColor(Color.RED);//设置画笔现在的颜色（红色）；
-		//画一个实心圆，参数分别为 x,y,w,h(以x,y为左上角，长宽分别为w,h的内切圆)；
-		g.fillOval(x, y, 30, 30);
-		g.setColor(c);//把画笔设置成原来的颜色；*/
-		myTank.draw(g);
-		
+	     myTank.draw(g);
+		 missile.draw(g);
 	}
 	/**
 	 * 解决屏幕闪烁的问题（用双缓冲解决）；方法调用顺序：repaint();update();paint();

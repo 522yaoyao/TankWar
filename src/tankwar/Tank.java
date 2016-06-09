@@ -59,6 +59,10 @@ case STOP:
 	   break;
 	   }
    }
+   /**
+    * 键盘释放；
+    * @param e
+    */
    public void keyReleased(KeyEvent e){
 	   int key=e.getKeyCode();//从键盘获得虚拟的键（返回与此事件中的键关联的整数 keyCode）；
 		//将获得的键和KeyEvent中的常量进行比较；
