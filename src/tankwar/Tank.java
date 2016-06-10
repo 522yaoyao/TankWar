@@ -16,6 +16,8 @@ public class Tank {
 	private boolean bL=false, bU=false,bR=false,bD=false;
 	enum Direction{L,U,LU,R,RU,D,RD,LD,STOP};////定义枚举类型；
 	Direction dir=Direction.STOP;//坦克默认停止；
+	Direction ptDir=Direction.D;//定义炮筒的方向；
+	
 	TankClient tc;
 	
 	public Tank(int x,int y){
@@ -32,7 +34,41 @@ public class Tank {
 		//画一个实心圆，参数分别为 x,y,w,h(以x,y为左上角，长宽分别为w,h的内切圆)；
 		g.fillOval(x, y, WIDTH, HEIGHT);
 		g.setColor(c);//把画笔设置成原来的颜色；
+		ptMove(g);
 		move();
+   }
+   /**
+    * 模拟炮筒，并定义出相应的方向；
+    * @param g
+    */
+   public void ptMove(Graphics g){
+	   switch(ptDir){
+		 case L:
+			g.drawLine(x+WIDTH/2, y+HEIGHT/2, x, y+HEIGHT/2);
+			   break;
+	      case LU:
+	    	g.drawLine(x+WIDTH/2, y+HEIGHT/2, x, y);
+	    	   break;
+	     case U:
+	    		g.drawLine(x+WIDTH/2, y+HEIGHT/2, x+WIDTH/2, y);
+		   break;
+	case RU:
+		g.drawLine(x+WIDTH/2, y+HEIGHT/2, x+WIDTH, y);
+		   break;
+	case R:
+		g.drawLine(x+WIDTH/2, y+HEIGHT/2,  x+WIDTH, y+HEIGHT/2);
+		   break;
+	case RD:
+		g.drawLine(x+WIDTH/2, y+HEIGHT/2, x+WIDTH, y+HEIGHT);
+		   break;
+	case D:
+		g.drawLine(x+WIDTH/2, y+HEIGHT/2,x+WIDTH/2, y+HEIGHT);
+		   break;
+	case LD:
+		g.drawLine(x+WIDTH/2, y+HEIGHT/2, x, y+HEIGHT);
+		   break;
+	
+		   }
    }
    public void move(){
 	   switch(dir){
@@ -67,6 +103,9 @@ case LD:
 case STOP:
 	   break;
 	   }
+	   /*使炮筒无STOP方向*/
+	   if(this.dir!=Direction.STOP)
+		   this.ptDir=this.dir;
    }
    /**
     * 键盘释放；
@@ -140,7 +179,8 @@ case STOP:
    public Missile fire(){
 	   int x=this.x+Tank.WIDTH/2-Missile.WIDTH/2;
 	   int y=this.y+Tank.HEIGHT/2-Missile.HEIGHT/2;
-	   Missile m=new Missile(x,y,dir);
+	   /*坦克停止时，炮筒仍然有相应的方向（坦克之前运动的方向、默认方向）*/
+	   Missile m=new Missile(x,y,ptDir);//使炮弹等于炮筒的方向
 	   return m;
 	   }
 }
