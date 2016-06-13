@@ -115,6 +115,9 @@ case STOP:
 	   int key=e.getKeyCode();//从键盘获得虚拟的键（返回与此事件中的键关联的整数 keyCode）；
 		//将获得的键和KeyEvent中的常量进行比较；
 		switch(key){
+	case KeyEvent.VK_CONTROL:
+			fire();//每抬起一次发送一颗炮弹，防止炮弹过于密集；
+			break;
 		case KeyEvent.VK_RIGHT:
 			bR=false;
 			break;
@@ -134,9 +137,9 @@ case STOP:
 	   int key=e.getKeyCode();//从键盘获得虚拟的键（返回与此事件中的键关联的整数 keyCode）；
 		//将获得的键和KeyEvent中的常量进行比较；
 		switch(key){
-		case KeyEvent.VK_CONTROL:
-			tc.missile=fire();
-			break;
+		/*case KeyEvent.VK_CONTROL:
+			fire();
+			break;*/
 		case KeyEvent.VK_RIGHT:
 			bR=true;
 			break;
@@ -181,6 +184,7 @@ case STOP:
 	   int y=this.y+Tank.HEIGHT/2-Missile.HEIGHT/2;
 	   /*坦克停止时，炮筒仍然有相应的方向（坦克之前运动的方向、默认方向）*/
 	   Missile m=new Missile(x,y,ptDir);//使炮弹等于炮筒的方向
+	   tc.missiles.add(m);
 	   return m;
 	   }
 }
