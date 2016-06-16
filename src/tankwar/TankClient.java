@@ -1,6 +1,7 @@
 package tankwar;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -27,11 +28,12 @@ public class TankClient extends Frame {
 	 */
 	@Override
 	public void paint(Graphics g){
-	/*if(missile!=null)
-		 missile.draw(g);*/
+  //	g.setFont(new Font("中华彩云",Font.BOLD,20));
+		g.drawString(" missile count "+missiles.size(), 10, 40);//显示发出的炮弹数目；
 		for(int i=0;i<missiles.size();i++){
 			Missile m=missiles.get(i);
-			m.draw(g);
+		    m.draw(g);
+		    
 		}
 	     myTank.draw(g);
 		
