@@ -1,7 +1,7 @@
 package tankwar;
 
 import java.awt.Color;
-import java.awt.Font;
+//import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -17,7 +17,8 @@ public class TankClient extends Frame {
 	public static final int GAME_WIDTH=800;
 	public static final int GAME_HIGH=600;
 	
-	Tank myTank=new Tank(50,50,this);
+	Tank myTank=new Tank(50,50,true,this);//设置自己的坦克；
+	Tank  enemyTank =new Tank(100,100,false,this);
 	List<Missile> missiles=new ArrayList<Missile>();
 	
 	  //Missile  missile;
@@ -36,6 +37,7 @@ public class TankClient extends Frame {
 		    
 		}
 	     myTank.draw(g);
+	     enemyTank.draw(g);
 		
 	}
 	/**

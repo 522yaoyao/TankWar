@@ -14,6 +14,8 @@ public class Tank {
 	
 	private int x,y;
 	private boolean bL=false, bU=false,bR=false,bD=false;
+	private boolean good=true;//判断敌我坦克；
+	
 	enum Direction{L,U,LU,R,RU,D,RD,LD,STOP};////定义枚举类型；
 	Direction dir=Direction.STOP;//坦克默认停止；
 	Direction ptDir=Direction.D;//定义炮筒的方向；
@@ -24,13 +26,17 @@ public class Tank {
 		this.x=x;
 		this.y=y;
 	}
-	public Tank(int x,int y,TankClient tc){
+	public Tank(int x,int y,boolean good,TankClient tc){
 		this(x, y);
 		this.tc=tc;
+		this.good=good;
 	}
    public void draw(Graphics g){
 		Color c=g.getColor();//取画笔原来的颜色（默认黑色）；
-		g.setColor(Color.RED);//设置画笔现在的颜色（红色）；
+		if(good)
+		    g.setColor(Color.RED);//设置画笔现在的颜色（红色）；
+		else
+			g.setColor(Color.BLUE);
 		//画一个实心圆，参数分别为 x,y,w,h(以x,y为左上角，长宽分别为w,h的内切圆)；
 		g.fillOval(x, y, WIDTH, HEIGHT);
 		g.setColor(c);//把画笔设置成原来的颜色；
@@ -106,6 +112,15 @@ case STOP:
 	   /*使炮筒无STOP方向*/
 	   if(this.dir!=Direction.STOP)
 		   this.ptDir=this.dir;
+	   if(x<0)
+		   x=0;
+	   if(y<25)
+		   y=25;
+	   if(x+Tank.WIDTH>TankClient.GAME_WIDTH)
+		   x=TankClient.GAME_WIDTH-Tank.WIDTH;
+	   if(y+Tank.HEIGHT>TankClient.GAME_HIGH)
+		   y=TankClient.GAME_HIGH-Tank.HEIGHT;
+	   
    }
    /**
     * 键盘释放；
