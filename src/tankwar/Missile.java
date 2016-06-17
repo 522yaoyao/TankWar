@@ -34,6 +34,11 @@ public class Missile {
     	  return live;//boolean 类型的要设置成is....();其他类型设置成set...();
       }
       public void draw(Graphics g){
+    	  if(!live){
+    		  //如果炮弹死亡，就不画了；
+    		  tc.missiles.remove(this);
+    		  return;
+    	  }
     	  Color c=g.getColor();
     	  g.setColor(Color.BLACK);
     	  g.fillOval(x, y, WIDTH, HEIGHT);
@@ -74,8 +79,25 @@ public class Missile {
     	   }
 /*在子弹移动完成后判断子弹的生死（子弹是否越界）*/
     	   if(x<0||y<0||x>TankClient.GAME_WIDTH||y>TankClient.GAME_HIGH){
-    		   live=false;
+    		   live=false; 
     		   tc.missiles.remove(this);
     	   }
+      }
+      public boolean hitTank(Tank t){
+    	  if(this.getRect().intersects(t.getRect())&&t.isLive()){
+    		  t.setLive(false);
+    		  this.live=false;
+    		  return true;
+    	  }
+    	  return false;
+    	  
+      }
+      /**
+       * 进行碰撞检测
+       * Rectangle 是一个碰撞检测的辅助类；
+       * @return
+       */
+      public Rectangle getRect(){
+    	  return new Rectangle(x,y,WIDTH,HEIGHT);
       }
 }

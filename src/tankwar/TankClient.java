@@ -33,6 +33,7 @@ public class TankClient extends Frame {
 		g.drawString(" missile count "+missiles.size(), 10, 40);//显示发出的炮弹数目；
 		for(int i=0;i<missiles.size();i++){
 			Missile m=missiles.get(i);
+			m.hitTank(enemyTank);//发射子弹并判断是否与敌方炮弹相撞；
 		    m.draw(g);
 		    
 		}

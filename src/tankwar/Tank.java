@@ -2,6 +2,7 @@ package tankwar;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 public class Tank {
@@ -13,6 +14,8 @@ public class Tank {
 	
 	
 	private int x,y;
+	
+	private boolean live=true;//默认坦克处于存活状态；
 	private boolean bL=false, bU=false,bR=false,bD=false;
 	private boolean good=true;//判断敌我坦克；
 	
@@ -31,7 +34,15 @@ public class Tank {
 		this.tc=tc;
 		this.good=good;
 	}
+	public void setLive(boolean live){
+		this.live=live;
+	}
+	public boolean isLive(){
+		return live;
+	}
    public void draw(Graphics g){
+	   if(!live)
+		   return;
 		Color c=g.getColor();//取画笔原来的颜色（默认黑色）；
 		if(good)
 		    g.setColor(Color.RED);//设置画笔现在的颜色（红色）；
@@ -203,4 +214,7 @@ case STOP:
 	   tc.missiles.add(m);
 	   return m;
 	   }
+   public Rectangle getRect(){
+ 	  return new Rectangle(x,y,WIDTH,HEIGHT);
+   }
 }
