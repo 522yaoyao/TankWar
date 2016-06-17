@@ -19,6 +19,9 @@ public class TankClient extends Frame {
 	
 	Tank myTank=new Tank(50,50,true,this);//设置自己的坦克；
 	Tank  enemyTank =new Tank(100,100,false,this);
+	
+	List<Explode> explodes=new ArrayList<Explode>();
+	
 	List<Missile> missiles=new ArrayList<Missile>();
 	
 	  //Missile  missile;
@@ -30,12 +33,17 @@ public class TankClient extends Frame {
 	@Override
 	public void paint(Graphics g){
   //	g.setFont(new Font("中华彩云",Font.BOLD,20));
-		g.drawString(" missile count "+missiles.size(), 10, 40);//显示发出的炮弹数目；
+		g.drawString("missile count "+missiles.size(), 10, 40);//显示发出的炮弹数目；
+		g.drawString("explode count"+explodes.size(),10,60);
 		for(int i=0;i<missiles.size();i++){
 			Missile m=missiles.get(i);
 			m.hitTank(enemyTank);//发射子弹并判断是否与敌方炮弹相撞；
 		    m.draw(g);
 		    
+		}
+		for(int i=0;i<explodes.size();i++){
+			Explode e=explodes.get(i);
+			e.draw(g);
 		}
 	     myTank.draw(g);
 	     enemyTank.draw(g);

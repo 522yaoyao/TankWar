@@ -10,6 +10,7 @@ public class Missile {
 	
 	
       int x,y;
+      
       private boolean live=true;//判断炮弹的生死；
       
      Tank.Direction dir;//定义子弹的方向；
@@ -87,6 +88,8 @@ public class Missile {
     	  if(this.getRect().intersects(t.getRect())&&t.isLive()){
     		  t.setLive(false);
     		  this.live=false;
+    		  Explode e=new Explode(x,y,tc);
+    		  tc.explodes.add(e);
     		  return true;
     	  }
     	  return false;
