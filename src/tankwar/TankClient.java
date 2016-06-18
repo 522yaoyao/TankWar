@@ -18,26 +18,30 @@ public class TankClient extends Frame {
 	public static final int GAME_HIGH=600;
 	
 	Tank myTank=new Tank(50,50,true,this);//设置自己的坦克；
-	Tank  enemyTank =new Tank(100,100,false,this);
+	//Tank  enemyTank =new Tank(100,100,false,this);
 	
 	List<Explode> explodes=new ArrayList<Explode>();
 	
 	List<Missile> missiles=new ArrayList<Missile>();
 	
-	  //Missile  missile;
+	List<Tank> tanks=new ArrayList<Tank>();
+	
 	Image offScreenImage=null;
 	
 	/**
-	 * 进行重画，需要重画时，默认调用；
+	 * 每隔100ms进行一次重画，需要重画时，默认调用；
 	 */
 	@Override
 	public void paint(Graphics g){
+	
   //	g.setFont(new Font("中华彩云",Font.BOLD,20));
 		g.drawString("missile count "+missiles.size(), 10, 40);//显示发出的炮弹数目；
-		g.drawString("explode count"+explodes.size(),10,60);
+		g.drawString("explode count "+explodes.size(),10,60);
+		g.drawString("Tank count "+tanks.size(),10,80);
+//g.drawString("explode count  "+(a++),10,60);
 		for(int i=0;i<missiles.size();i++){
 			Missile m=missiles.get(i);
-			m.hitTank(enemyTank);//发射子弹并判断是否与敌方炮弹相撞；
+		    m.hitTanks(tanks);//发射子弹并判断是否与敌方炮弹相撞；
 		    m.draw(g);
 		    
 		}
@@ -46,7 +50,11 @@ public class TankClient extends Frame {
 			e.draw(g);
 		}
 	     myTank.draw(g);
-	     enemyTank.draw(g);
+	     
+	     for(int i=0;i<tanks.size();i++){
+	    	Tank t= tanks.get(i);
+	    	t.draw(g);
+	     }
 		
 	}
 	/**
@@ -72,6 +80,10 @@ public class TankClient extends Frame {
 	}
 	//继承方法更灵活，可以设置自己的变量和方法；	
 		public void lauchFrame() {
+			//在启动时添加10辆坦克；
+			for(int i=0;i<10;i++){
+				tanks.add(new Tank(50+40*(i+1),70,false,this));
+			}
 			this.setLocation(400, 300);//定义窗口出现的位置，以屏幕的左上角为准；
 			this.setSize(GAME_WIDTH, GAME_HIGH);//设置宽度和高度；
 			this.setTitle("TankWar");

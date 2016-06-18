@@ -41,9 +41,12 @@ public class Tank {
 		return live;
 	}
    public void draw(Graphics g){
-	   if(!live)
-		   return;
-		Color c=g.getColor();//取画笔原来的颜色（默认黑色）；
+	   if(!live){
+		   if(!good)
+			   tc.tanks.remove(this);
+		   return;//坦克死亡移除并且不再画了；
+	   }
+		  Color c=g.getColor();//取画笔原来的颜色（默认黑色）；
 		if(good)
 		    g.setColor(Color.RED);//设置画笔现在的颜色（红色）；
 		else

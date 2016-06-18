@@ -1,5 +1,7 @@
 package tankwar;
+
 import java.awt.*;
+import java.util.List;
 
 public class Missile {
 	public static final int XSPEED=10;
@@ -102,5 +104,12 @@ public class Missile {
        */
       public Rectangle getRect(){
     	  return new Rectangle(x,y,WIDTH,HEIGHT);
+      }
+      public boolean hitTanks(List<Tank> tanks){
+    	  for(int i=0;i<tanks.size();i++){
+    		   if(hitTank(tanks.get(i)))
+    			   return true;
+    	  }
+    	  return false;
       }
 }
