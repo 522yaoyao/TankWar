@@ -14,6 +14,7 @@ public class Missile {
       int x,y;
       
       private boolean live=true;//判断炮弹的生死；
+      private boolean good;//判断子弹的好坏；
       
      Tank.Direction dir;//定义子弹的方向；
      TankClient tc;
@@ -22,14 +23,16 @@ public class Missile {
     	  this.x=x;
     	  this.y=y;
     	  this.dir=dir;
+    	  
       }
      /* public Missile(int x,int y,Tank.Direction dir TankClient tc){
     	  this(x,y,dir);
     	  this.tc=tc;
       }*/
-      public Missile(int x,int y, Tank.Direction dir, TankClient tc){
+      public Missile(int x,int y, Tank.Direction dir,boolean good, TankClient tc){
     	  this(x,y,dir);
     	  this.tc=tc;
+    	  this.good=good;
       }
       
       
@@ -87,7 +90,7 @@ public class Missile {
     	   }
       }
       public boolean hitTank(Tank t){
-    	  if(this.getRect().intersects(t.getRect())&&t.isLive()){
+    	  if(this.live&&this.getRect().intersects(t.getRect())&&t.isLive()&&this.good!=t.isGood()){
     		  t.setLive(false);
     		  this.live=false;
     		  Explode e=new Explode(x,y,tc);

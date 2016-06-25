@@ -17,7 +17,7 @@ public class TankClient extends Frame {
 	public static final int GAME_WIDTH=800;
 	public static final int GAME_HIGH=600;
 	
-	Tank myTank=new Tank(50,50,true,this);//设置自己的坦克；
+	Tank myTank=new Tank(50,50,true,Tank.Direction.STOP,this);//设置自己的坦克；
 	//Tank  enemyTank =new Tank(100,100,false,this);
 	
 	List<Explode> explodes=new ArrayList<Explode>();
@@ -41,7 +41,8 @@ public class TankClient extends Frame {
 //g.drawString("explode count  "+(a++),10,60);
 		for(int i=0;i<missiles.size();i++){
 			Missile m=missiles.get(i);
-		    m.hitTanks(tanks);//发射子弹并判断是否与敌方炮弹相撞；
+		    m.hitTanks(tanks);//敌方坦克被子弹打中；
+		    m.hitTank(myTank);//自己被敌方坦克打中；
 		    m.draw(g);
 		    
 		}
@@ -82,7 +83,7 @@ public class TankClient extends Frame {
 		public void lauchFrame() {
 			//在启动时添加10辆坦克；
 			for(int i=0;i<10;i++){
-				tanks.add(new Tank(50+40*(i+1),70,false,this));
+				tanks.add(new Tank(50+40*(i+1),70,false,Tank.Direction.D,this));//敌方坦克初始时向下移动；
 			}
 			this.setLocation(400, 300);//定义窗口出现的位置，以屏幕的左上角为准；
 			this.setSize(GAME_WIDTH, GAME_HIGH);//设置宽度和高度；

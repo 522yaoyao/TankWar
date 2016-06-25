@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 public class Tank {
 	public static final int XSPEED=5;
@@ -14,6 +15,9 @@ public class Tank {
 	
 	
 	private int x,y;
+	
+	private int step=random.nextInt(12)+3;//敌方坦克朝某个方向移动的步数；
+	private static Random random=new Random();//定义一个静态变量，所有实例共享；
 	
 	private boolean live=true;//默认坦克处于存活状态；
 	private boolean bL=false, bU=false,bR=false,bD=false;
@@ -29,10 +33,14 @@ public class Tank {
 		this.x=x;
 		this.y=y;
 	}
-	public Tank(int x,int y,boolean good,TankClient tc){
+	public Tank(int x,int y,boolean good,Direction dir,TankClient tc){
 		this(x, y);
 		this.tc=tc;
 		this.good=good;
+		this.dir=dir;
+	}
+	public boolean isGood(){
+		return good;
 	}
 	public void setLive(boolean live){
 		this.live=live;
@@ -90,6 +98,9 @@ public class Tank {
 	
 		   }
    }
+   /**
+    * 确定坦克移动的方向；
+    */
    public void move(){
 	   switch(dir){
 	 case L:
@@ -126,6 +137,7 @@ case STOP:
 	   /*使炮筒无STOP方向*/
 	   if(this.dir!=Direction.STOP)
 		   this.ptDir=this.dir;
+	   /*使坦克一直在界限里面；*/
 	   if(x<0)
 		   x=0;
 	   if(y<25)
@@ -134,7 +146,20 @@ case STOP:
 		   x=TankClient.GAME_WIDTH-Tank.WIDTH;
 	   if(y+Tank.HEIGHT>TankClient.GAME_HIGH)
 		   y=TankClient.GAME_HIGH-Tank.HEIGHT;
-	   
+	   if(!good){
+		   Direction[] dirs=Direction.values();//将一个枚举类转化为数组；
+		   //如果步数等于零，则换一个方向移动；
+		   if(step==0){
+			   step=random.nextInt(12)+3;
+			   int rn=random.nextInt(dirs.length);//将在0~dirs.length-1之间产生随机整数；
+			   dir=dirs[rn];
+			  // step--; 
+		   }
+		  step--;//放在此处，step的步数开始不等于0；
+		  if(random.nextInt(40)>38){
+		  this.fire();
+		  }
+	   }
    }
    /**
     * 键盘释放；
@@ -210,10 +235,12 @@ case STOP:
 		   dir=Direction.STOP;
    }
    public Missile fire(){
+	   if(!live)
+		   return null;//自己已经死了就不可以发射炮弹了；
 	   int x=this.x+Tank.WIDTH/2-Missile.WIDTH/2;
 	   int y=this.y+Tank.HEIGHT/2-Missile.HEIGHT/2;
 	   /*坦克停止时，炮筒仍然有相应的方向（坦克之前运动的方向、默认方向）*/
-	   Missile m=new Missile(x,y,ptDir,this.tc);//使炮弹等于炮筒的方向
+	   Missile m=new Missile(x,y,ptDir,this.good,tc);//使炮弹等于炮筒的方向,并将坦克好坏的属性加入；
 	   tc.missiles.add(m);
 	   return m;
 	   }
