@@ -15,6 +15,7 @@ public class Tank {
 	
 	
 	private int x,y;
+	private int oldX,oldY;
 	
 	private int step=random.nextInt(12)+3;//敌方坦克朝某个方向移动的步数；
 	private static Random random=new Random();//定义一个静态变量，所有实例共享；
@@ -102,6 +103,8 @@ public class Tank {
     * 确定坦克移动的方向；
     */
    public void move(){
+	   oldX=x;
+	   oldY=y;
 	   switch(dir){
 	 case L:
 		   x-=XSPEED;
@@ -246,5 +249,18 @@ case STOP:
 	   }
    public Rectangle getRect(){
  	  return new Rectangle(x,y,WIDTH,HEIGHT);
+   }
+   /**
+    * 坦克与墙相撞，返回上一步，随机改变方向；
+    * @param w
+    * @return
+    */
+   public boolean collidesWithWall(Wall w){
+	   if(this.live&&this.getRect().intersects(w.getRect())){
+		   x=oldX;
+		   y=oldY;
+		   return true;
+	   }
+	   return false;
    }
 }

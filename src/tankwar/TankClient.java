@@ -28,6 +28,8 @@ public class TankClient extends Frame {
 	
 	Image offScreenImage=null;
 	
+	Wall w1=new Wall(300,200,20,150,this);
+	Wall w2=new Wall(500,100,200,20,this);
 	/**
 	 * 每隔100ms进行一次重画，需要重画时，默认调用；
 	 */
@@ -43,6 +45,8 @@ public class TankClient extends Frame {
 			Missile m=missiles.get(i);
 		    m.hitTanks(tanks);//敌方坦克被子弹打中；
 		    m.hitTank(myTank);//自己被敌方坦克打中；
+		    m.hitWall(w1);
+		    m.hitWall(w2);
 		    m.draw(g);
 		    
 		}
@@ -55,8 +59,11 @@ public class TankClient extends Frame {
 	     for(int i=0;i<tanks.size();i++){
 	    	Tank t= tanks.get(i);
 	    	t.draw(g);
+	    	t.collidesWithWall(w1);
+	    	t.collidesWithWall(w2);
 	     }
-		
+		w1.draw(g);
+		w2.draw(g);
 	}
 	/**
 	 * 解决屏幕闪烁的问题（用双缓冲解决）；方法调用顺序：repaint();update();paint();

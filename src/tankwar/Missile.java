@@ -115,4 +115,16 @@ public class Missile {
     	  }
     	  return false;
       }
+      /**
+       * 进行与墙的碰撞检测；
+       * @param w
+       * @return
+       */
+      public boolean hitWall(Wall w){
+    	  if(this.live&&this.getRect().intersects(w.getRect())){
+    		  this.live=false;
+    		  return true;
+    	  }
+    	  return false;
+    	}
 }
