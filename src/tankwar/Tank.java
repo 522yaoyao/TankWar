@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.Random;
 
 public class Tank {
@@ -257,10 +258,32 @@ case STOP:
     */
    public boolean collidesWithWall(Wall w){
 	   if(this.live&&this.getRect().intersects(w.getRect())){
-		   x=oldX;
-		   y=oldY;
+		   this.stay();
 		   return true;
 	   }
 	   return false;
    }
+   /**
+    * 坦克不可与坦克相撞；
+    * @param tanks
+    * @return
+    */
+   public boolean collidesWithTanks(List<Tank> tanks){
+	   for(int i=0;i<tanks.size();i++){
+		   Tank t=tanks.get(i);
+		   if(this!=t){
+		   if(this.live&&t.live&&this.getRect().intersects(t.getRect())){
+			   this.stay();
+			   t.stay();//两个坦克都回到上一步；
+			   return true;
+		   }
+		  
+	   }
+	 }
+	   return false;
+  }
+  public void stay(){
+	  x=oldX;
+	   y=oldY;
+  }
 }
