@@ -188,6 +188,9 @@ case STOP:
 		case KeyEvent.VK_DOWN:
 			bD=false;
 			break;
+		case KeyEvent.VK_ALT:
+		   superFire();
+		   break;
 		}
 		locateDirection();
    }
@@ -248,6 +251,16 @@ case STOP:
 	   tc.missiles.add(m);
 	   return m;
 	   }
+   public Missile fire(Direction dir){
+	   if(!live)
+		   return null;//自己已经死了就不可以发射炮弹了；
+	   int x=this.x+Tank.WIDTH/2-Missile.WIDTH/2;
+	   int y=this.y+Tank.HEIGHT/2-Missile.HEIGHT/2;
+	   /*坦克停止时，炮筒仍然有相应的方向（坦克之前运动的方向、默认方向）*/
+	   Missile m=new Missile(x,y,dir,this.good,tc);//使炮弹等于炮筒的方向,并将坦克好坏的属性加入；
+	 //  tc.missiles.add(m);
+	   return m;
+   }
    public Rectangle getRect(){
  	  return new Rectangle(x,y,WIDTH,HEIGHT);
    }
@@ -285,5 +298,11 @@ case STOP:
   public void stay(){
 	  x=oldX;
 	   y=oldY;
+  }
+  public void superFire(){
+	  Direction[] dirs=Direction.values();
+	  for(int i=0;i<8;i++){
+		  tc.missiles.add(fire(dirs[i]));
+	  }
   }
 }
