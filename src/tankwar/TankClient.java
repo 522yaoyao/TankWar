@@ -37,9 +37,10 @@ public class TankClient extends Frame {
 	public void paint(Graphics g){
 	
   //	g.setFont(new Font("中华彩云",Font.BOLD,20));
-		g.drawString("missile count "+missiles.size(), 10, 40);//显示发出的炮弹数目；
-		g.drawString("explode count "+explodes.size(),10,60);
-		g.drawString("Tank count "+tanks.size(),10,80);
+		g.drawString("missile   count:"+missiles.size(), 10, 40);//显示发出的炮弹数目；
+		g.drawString("explode count:"+explodes.size(),10,60);
+		g.drawString("Tank      count:"+tanks.size(),10,80);
+		g.drawString("Tank          life:"+myTank.getLife(),10, 100);
 //g.drawString("explode count  "+(a++),10,60);
 		for(int i=0;i<missiles.size();i++){
 			Missile m=missiles.get(i);

@@ -91,10 +91,20 @@ public class Missile {
       }
       public boolean hitTank(Tank t){
     	  if(this.live&&this.getRect().intersects(t.getRect())&&t.isLive()&&this.good!=t.isGood()){
-    		  t.setLive(false);
-    		  this.live=false;
+ //主坦克多次才可打死；
+    		  if(t.isGood()){
+    			  t.setLife(t.getLife()-20);
+    			  if(t.getLife()<=0)
+    				  t.setLive(false);  
+    		  }
+ //敌方坦克一次就打死；
+    		  else
+    			  t.setLive(false);
+    			  this.live=false;
+    		if(t.isLive()==false){
     		  Explode e=new Explode(x,y,tc);
     		  tc.explodes.add(e);
+    		}
     		  return true;
     	  }
     	  return false;
@@ -108,6 +118,11 @@ public class Missile {
       public Rectangle getRect(){
     	  return new Rectangle(x,y,WIDTH,HEIGHT);
       }
+      /**
+       * 依次检测List中的坦克是否被击中；
+       * @param tanks
+       * @return
+       */
       public boolean hitTanks(List<Tank> tanks){
     	  for(int i=0;i<tanks.size();i++){
     		   if(hitTank(tanks.get(i)))

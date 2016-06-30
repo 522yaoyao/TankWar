@@ -15,11 +15,14 @@ public class Tank {
 	public static final int HEIGHT=30;
 	
 	
+	
 	private int x,y;
 	private int oldX,oldY;
 	
 	private int step=random.nextInt(12)+3;//敌方坦克朝某个方向移动的步数；
 	private static Random random=new Random();//定义一个静态变量，所有实例共享；
+	
+	private int life=100;
 	
 	private boolean live=true;//默认坦克处于存活状态；
 	private boolean bL=false, bU=false,bR=false,bD=false;
@@ -49,6 +52,12 @@ public class Tank {
 	}
 	public boolean isLive(){
 		return live;
+	}
+	public void setLife(int life){
+		this.life=life;
+	}
+	public int getLife(){
+		return life;
 	}
    public void draw(Graphics g){
 	   if(!live){
