@@ -34,6 +34,8 @@ public class Tank {
 	
 	TankClient tc;
 	
+	private BloodBar bb=new BloodBar();
+	
 	public Tank(int x,int y){
 		this.x=x;
 		this.y=y;
@@ -75,6 +77,9 @@ public class Tank {
 		g.setColor(c);//把画笔设置成原来的颜色；
 		ptMove(g);
 		move();
+		if(good)
+			bb.draw(g);
+			
    }
    /**
     * 模拟炮筒，并定义出相应的方向；
@@ -312,6 +317,16 @@ case STOP:
 	  Direction[] dirs=Direction.values();
 	  for(int i=0;i<8;i++){
 		  tc.missiles.add(fire(dirs[i]));
+	  }
+  }
+  private class BloodBar{
+	  public void draw(Graphics g){
+		  Color c=g.getColor();
+		  g.setColor(Color.RED);
+		  g.drawRect(x, y-10, WIDTH, 10);
+		  int w=WIDTH*life/100;
+		  g.fillRect(x, y-10, w, 10);
+		  g.setColor(c);
 	  }
   }
 }
