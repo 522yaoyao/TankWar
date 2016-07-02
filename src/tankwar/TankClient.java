@@ -26,6 +26,8 @@ public class TankClient extends Frame {
 	
 	List<Tank> tanks=new ArrayList<Tank>();
 	
+	Blood b=new Blood();
+	//int a=0;
 	Image offScreenImage=null;
 	
 	Wall w1=new Wall(300,200,20,150,this);
@@ -35,13 +37,14 @@ public class TankClient extends Frame {
 	 */
 	@Override
 	public void paint(Graphics g){
-	
+
   //	g.setFont(new Font("中华彩云",Font.BOLD,20));
 		g.drawString("missile   count:"+missiles.size(), 10, 40);//显示发出的炮弹数目；
 		g.drawString("explode count:"+explodes.size(),10,60);
 		g.drawString("Tank      count:"+tanks.size(),10,80);
 		g.drawString("Tank          life:"+myTank.getLife(),10, 100);
-//g.drawString("explode count  "+(a++),10,60);
+	
+//g.drawString("explode count  "+(a++),10,120);
 		for(int i=0;i<missiles.size();i++){
 			Missile m=missiles.get(i);
 		    m.hitTanks(tanks);//敌方坦克被子弹打中；
@@ -56,6 +59,7 @@ public class TankClient extends Frame {
 			e.draw(g);
 		}
 	     myTank.draw(g);
+	     myTank.eat(b);
 	     myTank .collidesWithWall(w1);
 	     myTank.collidesWithWall(w2);
 	     myTank.collidesWithTanks(tanks);
@@ -69,6 +73,7 @@ public class TankClient extends Frame {
 	     }
 		w1.draw(g);
 		w2.draw(g);
+		b.draw(g);
 	}
 	/**
 	 * 解决屏幕闪烁的问题（用双缓冲解决）；方法调用顺序：repaint();update();paint();

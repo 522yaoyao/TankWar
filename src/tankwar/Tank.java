@@ -14,7 +14,7 @@ public class Tank {
 	public static final int WIDTH=30;
 	public static final int HEIGHT=30;
 	
-	
+	public static int FULL=100;
 	
 	private int x,y;
 	private int oldX,oldY;
@@ -22,7 +22,7 @@ public class Tank {
 	private int step=random.nextInt(12)+3;//敌方坦克朝某个方向移动的步数；
 	private static Random random=new Random();//定义一个静态变量，所有实例共享；
 	
-	private int life=100;
+private int life=FULL;
 	
 	private boolean live=true;//默认坦克处于存活状态；
 	private boolean bL=false, bU=false,bR=false,bD=false;
@@ -324,9 +324,17 @@ case STOP:
 		  Color c=g.getColor();
 		  g.setColor(Color.RED);
 		  g.drawRect(x, y-10, WIDTH, 10);
-		  int w=WIDTH*life/100;
+		  int w=WIDTH*life/FULL;
 		  g.fillRect(x, y-10, w, 10);
 		  g.setColor(c);
 	  }
+  }
+  public boolean eat(Blood b){
+	  if(this.live&&b.isLive()&&this.getRect().intersects(b.getRect())){
+		  this.life=FULL;
+		  b.setLive(false);
+		  return true;
+	  }
+	  return false;
   }
 }
