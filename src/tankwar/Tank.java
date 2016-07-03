@@ -22,7 +22,7 @@ public class Tank {
 	private int step=random.nextInt(12)+3;//敌方坦克朝某个方向移动的步数；
 	private static Random random=new Random();//定义一个静态变量，所有实例共享；
 	
-private int life=FULL;
+     private int life=FULL;
 	
 	private boolean live=true;//默认坦克处于存活状态；
 	private boolean bL=false, bU=false,bR=false,bD=false;
@@ -205,6 +205,13 @@ case STOP:
 		case KeyEvent.VK_ALT:
 		   superFire();
 		   break;
+		/*case KeyEvent.VK_A:
+			if(!this.live){
+				System.out.println("1");
+			this.live=true;
+				this.life=FULL;
+			}
+			break;*/
 		}
 		locateDirection();
    }
@@ -216,6 +223,15 @@ case STOP:
 	/*	case KeyEvent.VK_CONTROL:
 			fire();
 			break;*/
+		
+	case KeyEvent.VK_0:
+		
+			if(!this.live){
+//System.out.println("1");
+				this.live=true;
+				this.life=FULL;
+			}
+			break;
 		case KeyEvent.VK_RIGHT:
 			bR=true;
 			break;

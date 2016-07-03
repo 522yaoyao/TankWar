@@ -45,6 +45,11 @@ public class TankClient extends Frame {
 		g.drawString("Tank          life:"+myTank.getLife(),10, 100);
 	
 //g.drawString("explode count  "+(a++),10,120);
+		if(tanks.size()==0){
+			for(int i=0;i<5;i++){
+				tanks.add(new Tank(50+40*(i+1),70,false,Tank.Direction.D,this));//敌方坦克初始时向下移动；
+			}	
+		}
 		for(int i=0;i<missiles.size();i++){
 			Missile m=missiles.get(i);
 		    m.hitTanks(tanks);//敌方坦克被子弹打中；
