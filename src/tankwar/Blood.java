@@ -50,6 +50,10 @@ public class Blood {
 		x=pos[step][0];
 		y=pos[step][1];
    }
+   /**
+	 * 得到一个碰撞检测类；
+	 * @return Rectangle类的实例；
+	 */
    public Rectangle getRect(){
 	   return  new Rectangle(x,y,w,h);
    }

@@ -271,6 +271,10 @@ case STOP:
 	   else  if(!bL&&!bU&&!bR&&!bD)
 		   dir=Direction.STOP;
    }
+   /**
+    * 发射炮弹；
+    * @return Missile子弹类的实例；
+    */
    public Missile fire(){
 	   if(!live)
 		   return null;//自己已经死了就不可以发射炮弹了；
@@ -291,13 +295,17 @@ case STOP:
 	 //  tc.missiles.add(m);
 	   return m;
    }
+   /**
+	 * 得到一个碰撞检测类；
+	 * @return Rectangle类的实例；
+	 */
    public Rectangle getRect(){
  	  return new Rectangle(x,y,WIDTH,HEIGHT);
    }
    /**
     * 坦克与墙相撞，返回上一步，随机改变方向；
     * @param w
-    * @return
+    * @return 相撞返回true,未相撞返回false;
     */
    public boolean collidesWithWall(Wall w){
 	   if(this.live&&this.getRect().intersects(w.getRect())){
@@ -309,7 +317,7 @@ case STOP:
    /**
     * 坦克不可与坦克相撞；
     * @param tanks
-    * @return
+    * @return相撞返回true,未相撞返回false;
     */
    public boolean collidesWithTanks(List<Tank> tanks){
 	   for(int i=0;i<tanks.size();i++){
@@ -325,16 +333,27 @@ case STOP:
 	 }
 	   return false;
   }
+   /**
+    * 回到上一步；
+    */
   public void stay(){
 	  x=oldX;
 	   y=oldY;
   }
+  /**
+   * 发射超级炮弹；
+   */
   public void superFire(){
 	  Direction[] dirs=Direction.values();
 	  for(int i=0;i<8;i++){
 		  tc.missiles.add(fire(dirs[i]));
 	  }
   }
+  /**
+   * 显示血块的内部类；
+   * @author liuyao;
+   *
+   */
   private class BloodBar{
 	  public void draw(Graphics g){
 		  Color c=g.getColor();

@@ -113,7 +113,7 @@ public class Missile {
       /**
        * 进行碰撞检测
        * Rectangle 是一个碰撞检测的辅助类；
-       * @return
+       * @return   Rectangle类的实例；
        */
       public Rectangle getRect(){
     	  return new Rectangle(x,y,WIDTH,HEIGHT);
@@ -121,7 +121,7 @@ public class Missile {
       /**
        * 依次检测List中的坦克是否被击中；
        * @param tanks
-       * @return
+       * @return 相撞返回true,未相撞返回false;
        */
       public boolean hitTanks(List<Tank> tanks){
     	  for(int i=0;i<tanks.size();i++){
@@ -133,7 +133,7 @@ public class Missile {
       /**
        * 进行与墙的碰撞检测；
        * @param w
-       * @return
+       * @return 相撞返回true,未相撞返回false;
        */
       public boolean hitWall(Wall w){
     	  if(this.live&&this.getRect().intersects(w.getRect())){

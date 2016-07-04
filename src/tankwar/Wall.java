@@ -25,7 +25,7 @@ public class Wall {
 		}
 	/**
 	 * 得到一个碰撞检测类；
-	 * @return
+	 * @return Rectangle类的实例；
 	 */
    public  Rectangle getRect(){
 	   return new Rectangle(x,y,w,h);

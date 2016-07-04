@@ -12,7 +12,11 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.ArrayList;
 
-
+/**
+ * 整个坦克游戏的主窗口；
+ * @author liuao
+ *
+ */
 public class TankClient extends Frame {
 	public static final int GAME_WIDTH=800;
 	public static final int GAME_HIGH=600;
